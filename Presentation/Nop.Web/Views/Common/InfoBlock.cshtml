@@ -1,0 +1,90 @@
+﻿@model InfoBlockModel
+@using Nop.Web.Models.Common;
+@{
+    var rootContext = ViewContext;
+    while (rootContext.ParentActionViewContext != null)
+    {
+        rootContext = rootContext.ParentActionViewContext;
+    }
+    var action = rootContext.RouteData.Values["action"].ToString().ToLower();
+    var controller = rootContext.RouteData.Values["controller"].ToString().ToLower();
+    var systemName = "";
+    if (rootContext.RouteData.Values["SystemName"] != null)
+    {
+        systemName = rootContext.RouteData.Values["SystemName"].ToString().ToLower();
+    }
+}
+<h4 class="titleIntroDiv">@T("AboutUs")</h4>
+<ul>
+    <li class="">
+        <a href="@Url.RouteUrl("Topic", new { SystemName = "aboutus" })">@T("AboutUs")</a>
+        <ul>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "ourmission" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "ourmission" ? "active" : "")">@T("OurMission")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "ourvalue" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "ourvalue" ? "active" : "")">@T("OurValue")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "ourproductandservice" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "ourproductandservice" ? "active" : "")">@T("OurProductAndService")</a></li>
+        @if (Model.SitemapEnabled)
+        {
+            <li><a href="@Url.Action("Sitemap", "Common")" class="@(controller == "common" && action == "sitemap" ? "active" : "")">@T("Sitemap")</a></li>
+        }
+        </ul>
+    </li>
+    <li>
+        <a>@T("Help")</a>
+        <ul>
+            
+            <li><a href="#">@T("Account.CustomerOrders")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "shippinginfo" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "shippinginfo" ? "active" : "")">@T("ShippingReturns")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "customerservice" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "customerservice" ? "active" : "")">@T("CustomerService")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "privacyinfo" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "privacyinfo" ? "active" : "")">@T("PrivacyNotice")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "faq" })" class="@(controller == "topic" && action == "topicdetails" && systemName == "faq" ? "active" : "")">@T("FAQ")</a></li>
+        </ul>
+    </li>
+    <li><a href="@Url.Action("Index", "NewsExRead")">@T("News")</a></li>
+    <li><a href="@Url.Action("Index", "EventRead")">@T("Event")</a></li>
+    <li><a href="@Url.Action("Index", "ProjectRead")">@T("Project")</a></li>
+    <li><a href="@Url.Action("Index", "ServiceRead")">@T("Services")</a></li>
+</ul>
+@*<div class="block block-info">
+    <div class="title">
+        <strong>@T("Information")</strong>
+    </div>
+    <div class="listbox">
+        <ul class="list">
+            @Html.Widget("infoblock_before")
+            <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a> </li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "aboutus" })">@T("AboutUs")</a></li>
+            @if (Model.NewsEnabled)
+            {
+                <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
+            }
+            @if (Model.BlogEnabled)
+            {
+                <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+            }
+            @if (Model.ForumEnabled)
+            {
+                <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+            }
+            @if (Model.RecentlyAddedProductsEnabled)
+            {
+                <li><a href="@Url.RouteUrl("RecentlyAddedProducts")">@T("Products.NewProducts")</a></li>
+            }
+            @if (Model.RecentlyViewedProductsEnabled)
+            {
+                <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
+            }
+            @if (Model.CompareProductsEnabled)
+            {
+                <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>            
+            }
+            @if (Model.SitemapEnabled)
+            {
+                <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
+            }
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "shippinginfo" })">@T("ShippingReturns")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "privacyinfo" })">@T("PrivacyNotice")</a></li>
+            <li><a href="@Url.RouteUrl("Topic", new { SystemName = "conditionsofUse" })">@T("ConditionsOfUse")</a></li>
+            @Html.Widget("infoblock_after")
+        </ul>
+    </div>
+</div>*@

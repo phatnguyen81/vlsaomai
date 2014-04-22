@@ -1,0 +1,46 @@
+﻿@model BranchGroupModel
+@{
+    Layout = "~/Views/Shared/_ColumnsTwoIntro.cshtml";
+    //current branchGroup ID
+    int currentBranchGroupId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("BranchGroupRead", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("Detail", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentBranchGroupId = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"].ToString());
+    }
+
+    //current branch ID
+    int currentBranchId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("BranchRead", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("Detail", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentBranchId = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"].ToString());
+    }
+}
+@section left{
+    @Html.Action("BranchGroupNavigation","BranchGroupRead", new {currentBranchGroupId = currentBranchGroupId, currentBranchId = currentBranchId})
+}
+@section YouAreHere{
+    <div class="youAreHere">
+        <ul>
+            <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+            <li class="active"><a href="#">@Html.Raw(Model.Name)</a></li>
+        </ul>
+    </div>
+}
+
+<h4 class="titleIntroDiv">@T("BranchAt") @Model.Name</h4>
+<div class="row rightContent">
+    @foreach (var branch in Model.Branches)
+    {
+    <div class="row col-xs-12 col_right newsItem ">
+        <h5><a href="@Url.Action("Detail","BranchRead", new {id=branch.Id})">@Html.Raw(branch.Title)</a></h5>
+        <div class="col-sm-4 imageProject">
+            <img src="@branch.PictureModel.ImageUrl" alt="@Html.Raw(branch.Title)" />
+        </div>
+        <div class="col-sm-8 branch">
+            @Html.Raw(branch.Short)
+        </div>
+    </div>
+    }
+</div>

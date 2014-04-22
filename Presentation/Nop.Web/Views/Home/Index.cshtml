@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+@*<div class="page home-page">
+    <div class="page-body">
+        @Html.Widget("home_page_top")
+        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+        @Html.Action("HomepageCategories", "Catalog")
+        @Html.Action("HomepageProducts", "Catalog")
+        @Html.Action("HomepageBestSellers", "Catalog")
+        @Html.Action("HomePageNews", "News")
+        @Html.Action("HomePagePolls", "Poll")
+        @Html.Widget("home_page_bottom")
+    </div>
+</div>*@
+@{
+    //current category ID
+    int currentCategoryId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.RequestContext.RouteData.Values["categoryId"].ToString());
+    }
+
+
+    //current manufacturer ID
+    int currentManufacturerId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentManufacturerId = Convert.ToInt32(Url.RequestContext.RouteData.Values["manufacturerId"].ToString());
+    }
+
+
+    //current product ID
+    int currentProductId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
+    }
+}
+<div class="banner row">
+    @Html.Action("AllCategoriesNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+    <div id="slider">
+        @Html.Widget("home_page_top")
+    </div>
+    
+</div>
+@Html.Action("RecentlyAddedProducts", "Catalog")
+@Html.Action("HomepageCategories", "Catalog")
+@*<div class="row group">
+    <h2>@T("Products")</h2>
+    <div class="row productList">
+        <div class="col-sm-4">
+            <div class="gItem">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/Building.png")" />
+                    <h2>Building Materials</h2>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="gItem">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/BathFaucets.png")" />
+                    ><h2>Bath & Faucets</h2>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="gItem">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/Flooring.png")" />
+                    ><h2>Flooring</h2>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="gItem">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/Plumbing.png")" />
+                    ><h2>Plumbing</h2>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="gItem">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/Kitchen.png")" />
+                    ><h2>Kitchen</h2>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <div class="gItem">
+                <a href="#">
+                    <img src="@Url.Content("~/Content/images/Electrical.png")"style="" />
+                    ><h2>Electrical</h2>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>*@

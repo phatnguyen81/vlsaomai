@@ -1,0 +1,183 @@
+﻿@model BranchGroupModel
+
+@using Telerik.Web.Mvc.UI;
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+@Html.Telerik().TabStrip().Name("branchGroup-edit").Items(x =>
+{
+    x.Add().Text(T("Toi.Plugin.Misc.Branches.BranchGroup.Info").Text).Content(TabInfo().ToHtmlString()).Selected(true);
+    x.Add().Text(T("Admin.Common.SEO").Text).Content(TabSeo().ToHtmlString());
+    
+    //generate an event
+    EngineContext.Current.Resolve<IEventPublisher>().Publish(new AdminTabStripCreated(x, "branchGroup-edit"));
+})
+@helper TabInfo()
+    { 
+    @(Html.LocalizedEditor<BranchGroupModel, BranchGroupLocalizedModel>("branchGroup-info-localized",
+                @<table class="adminContent">
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.Locales[item].Name):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => Model.Locales[item].Name)
+                            @Html.ValidationMessageFor(model => model.Locales[item].Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.Locales[item].Description):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.Locales[item].Description, "RichEditor")
+                            @Html.ValidationMessageFor(model => model.Locales[item].Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @Html.HiddenFor(model => model.Locales[item].LanguageId)
+                        </td>
+                    </tr>
+                </table>
+                ,
+                @<table class="adminContent">
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.Name):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(model => model.Name)
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            @Html.NopLabelFor(model => model.Description):
+                        </td>
+                        <td class="adminData">
+                            @Html.EditorFor(x => x.Description, "RichEditor")
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </td>
+                    </tr>
+                </table>
+            ))
+    <table class="adminContent">
+       
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PictureId)
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PictureId)
+                @Html.ValidationMessageFor(model => model.PictureId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.ParentGroupId):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().ComboBoxFor(x => x.ParentGroupId).BindTo(Model.ParentGroups).Encode(true)
+                    .DataBinding(x => x.Ajax().Enabled(true).Select("AllBranchGroups", "BranchGroup", new { selectedId = Model.ParentGroupId })))
+                @Html.ValidationMessageFor(model => model.ParentGroupId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.DisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DisplayOrder)
+                @Html.ValidationMessageFor(model => model.DisplayOrder)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSeo()
+    {
+    @(Html.LocalizedEditor<BranchGroupModel, BranchGroupLocalizedModel>("branchGroup-seo-localized",
+               @<table class="adminContent">
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaKeywords):
+                       </td>
+                       <td class="adminData">
+                           @Html.EditorFor(model => model.Locales[item].MetaKeywords)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaKeywords)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaDescription):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].MetaDescription)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaDescription)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaTitle):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].MetaTitle)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaTitle)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].SeName):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].SeName)
+                           @Html.ValidationMessageFor(model => model.Locales[item].SeName)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td colspan="2">
+                           @Html.HiddenFor(model => model.Locales[item].LanguageId)
+                       </td>
+                   </tr>
+               </table>
+               ,
+               @<table class="adminContent">
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaKeywords):
+                       </td>
+                       <td class="adminData">
+                           @Html.EditorFor(x => x.MetaKeywords)
+                           @Html.ValidationMessageFor(model => model.MetaKeywords)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaDescription):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.MetaDescription)
+                           @Html.ValidationMessageFor(model => model.MetaDescription)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaTitle):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.MetaTitle)
+                           @Html.ValidationMessageFor(model => model.MetaTitle)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.SeName):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.SeName)
+                           @Html.ValidationMessageFor(model => model.SeName)
+                       </td>
+                   </tr>
+               </table>)) 
+}
+
+

@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.Head.cshtml";
+}
+@Html.Widget("body_start_html_tag_after")
+@Html.Partial("_Notifications")
+@Html.Action("AdminHeaderLinks", "Common")
+<div class="wrapper">
+    <div id="top">
+        <div class="headerTop navtop">
+            <ul>
+                <li><a class="help">TRỢ GIÚP</a></li>
+                <li><a class="phone">(+84.8) 3897 6959</a></li>
+                <li>
+                    <script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
+                    <div id="SkypeButton_Call_quyenvdt90_1">
+                        <script type="text/javascript">
+                            Skype.ui({
+                                "name": "chat",
+                                "element": "SkypeButton_Call_quyenvdt90_1",
+                                "participants": ["quyenvdt90"],
+                                "imageSize": 24,
+                                "imageColor": "white"
+                            });
+                        </script>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END TOP -->
+    @Html.Action("JavaScriptDisabledWarning", "Common")
+    <div id="container">
+        <div class="innerContainer">
+            <script type="text/javascript">
+                AjaxCart.init(false, '#header .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+            </script>
+            @Html.Partial("Header")
+            <div id="mainmenu" class="row">
+                @Html.Action("Menu", "Common")
+            </div>
+            @Html.Widget("content_before")
+            @*ajax loading window*@
+            <div class="ajax-loading-block-window" style="display: none">
+                <div class="loading-image">
+                </div>
+            </div>
+            @RenderBody()
+            @Html.Widget("content_after")
+            @Html.Action("EuCookieLaw", "Common")
+        </div>
+    </div>
+    <!-- END CONTAINER -->
+    
+    
+    
+
+    @Html.Action("Footer", "Common")
+</div>
+@Html.Widget("body_end_html_tag_before")

@@ -1,0 +1,20 @@
+﻿@model ArticleGroupModel
+@{
+    Layout = "~/Administration/Views/Shared/_AdminLayout.cshtml";
+    //page title
+    ViewBag.Title = @T("Toi.Plugin.Misc.Articles.ArticleGroup.AddNew").Text;
+}
+@using (Html.BeginForm("Create","ArticleGroup" , FormMethod.Post, new { id = "ArticleGroup" }))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-content.png")" alt="" />
+            @T("Toi.Plugin.Misc.Articles.ArticleGroup.AddNew") @Html.ActionLink("(" + T("Toi.Plugin.Misc.Articles.ArticleGroup.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="t-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="t-button" value="@T("Admin.Common.SaveContinue")" />
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}

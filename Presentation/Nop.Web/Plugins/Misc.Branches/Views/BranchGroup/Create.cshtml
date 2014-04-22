@@ -1,0 +1,20 @@
+﻿@model BranchGroupModel
+@{
+    Layout = "~/Administration/Views/Shared/_AdminLayout.cshtml";
+    //page title
+    ViewBag.Title = @T("Toi.Plugin.Misc.Branches.BranchGroup.AddNew").Text;
+}
+@using (Html.BeginForm("Create","BranchGroup" , FormMethod.Post, new { id = "BranchGroup" }))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-content.png")" alt="" />
+            @T("Toi.Plugin.Misc.Branches.BranchGroup.AddNew") @Html.ActionLink("(" + T("Toi.Plugin.Misc.Branches.BranchGroup.BackToList") + ")", "List")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="t-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="t-button" value="@T("Admin.Common.SaveContinue")" />
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    //current branchGroup ID
+    int currentDiyGroupId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("DiyGroupRead", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("Detail", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentDiyGroupId = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"].ToString());
+    }
+
+    //current branch ID
+    int currentDiyProjectId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("DiyProjectRead", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("Detail", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentDiyProjectId = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"].ToString());
+    }
+}
+@section left{
+    @Html.Action("DiyGroupNavigation", "DiyGroupRead", new { currentDiyGroupId = currentDiyGroupId, currentDiyProjectId = currentDiyProjectId })
+}
+@section YouAreHere{
+    <div class="youAreHere">
+        <ul>
+            <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+            <li class="active"><a href="#">@Html.Raw(Model.Name)</a></li>
+        </ul>
+    </div>
+}
+
+<div class="productsContent">
+    <h3>@Html.Raw(Model.Name)</h3>
+
+    <div class="row productGroup">
+        @foreach (var project in Model.DiyProjects)
+        {
+            <div class="col-sm-4 pGroupItem DIY_Item">
+                <a href="@Url.Action("Detail","DiyProjectRead", new {id = project.Id})" class="image"><img src="@project.PictureModel.ImageUrl"></a>
+                <a class="title" href="@Url.Action("Detail","DiyProjectRead", new {id = project.Id})">@Html.Raw(project.Title)</a>
+            </div>
+        }
+
+    </div>
+</div>

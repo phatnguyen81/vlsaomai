@@ -1,0 +1,40 @@
+﻿@model HotestDiyProjectModel
+@if (Model.Id > 0)
+{
+    Html.AddCssFileParts("~/Scripts/js/prettyPhoto/css/prettyPhoto.css");
+    Html.AddScriptParts("~/Scripts/js/prettyPhoto/js/jquery.prettyPhoto.js");
+    <div class="productsContent main_diy">
+        <h3><a href="@Url.Action("Detail","DiyProjectRead", new {id = Model.Id})">@Html.Raw(Model.Title)</a></h3>
+        <div class="row productDetail">
+            <div class="col-sm-12">
+                <p>
+                    @Html.Raw(Model.Short)
+                </p>
+            </div>
+            @if (Model.PictureUrls != null && Model.PictureUrls.Count > 0)
+            {
+                <div class="col-sm-7">
+                    <div class="mainImage">
+                        <a href="@Model.PictureUrls.First()" rel="prettyPhoto[hotestproject]"><img src="@Model.PictureUrls.First()"></a>
+                    </div>
+                </div>
+                <div class="col-sm-5 info">
+                    <div class="row slideImage">
+                        @foreach (var source in Model.PictureUrls.Skip(1))
+                        {
+                            <a class="col-sm-3" href="@source" rel="prettyPhoto[hotestproject]"><img src="@source"></a>
+                        }
+                    </div>
+                </div>
+             
+            }
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("a[rel^='prettyPhoto']").prettyPhoto({
+                social_tools: ''
+            });
+        });
+    </script>
+}

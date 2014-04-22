@@ -1,0 +1,50 @@
+﻿@model IList<ProductOverviewModel>
+
+@using Nop.Web.Models.Catalog;
+
+@if (Model.Count > 0)
+{
+    <div class="row group newProduct">
+        <h2>@T("Products.NewProducts")</h2>
+        <div id="recentlyAddedProducts" class="row productList">
+            @foreach (var product in Model)
+            {
+                <div class="col-sm-3 Item">
+                    @Html.Partial("_ProductBox", product)
+                </div>
+            }
+           
+        </div>
+        @if (Model.Count > 4)
+        {
+            <div class="prev"></div>
+            <div class="next"></div>
+        }
+    </div>
+    if (Model.Count > 4)
+    {
+         <script type="text/javascript">
+             $(document).ready(function() {
+                 $("#recentlyAddedProducts").carouFredSel({
+                     items: 4,
+                     height: 'auto',
+                     scroll: {
+                         items: 1,
+                         pauseOnHover: true
+                     },
+                     next:
+                     {
+                         button: ".newProduct .next",
+                         items: 4
+                     },
+                     prev:
+                     {
+                         button: ".newProduct .prev",
+                         items: 4
+                     }
+                 });
+             });
+
+         </script>
+    }
+}

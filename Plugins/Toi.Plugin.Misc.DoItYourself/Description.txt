@@ -1,0 +1,8 @@
+﻿Group: Misc
+FriendlyName: DIY Management
+SystemName: Misc.DoItYourself
+Version: 1.0
+SupportedVersions: 3.10
+Author: Nguyen Huu Phat
+DisplayOrder: 1
+FileName: Toi.Plugin.Misc.DoItYourself.dll

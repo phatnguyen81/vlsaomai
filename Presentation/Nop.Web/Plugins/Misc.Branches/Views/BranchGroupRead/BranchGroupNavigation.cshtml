@@ -1,0 +1,66 @@
+﻿@model BranchGroupNavigationModel
+
+@functions{
+    public bool BreadCrumbContainsCurrentBranchGroupId(BranchGroupNavigationModel.BranchGroupModel branchGroup)
+    {
+        if (Model.CurrentBranchGroupId == 0)
+            return false;
+
+        if (branchGroup.Id == Model.CurrentBranchGroupId)
+            return true;
+
+        foreach (var subBranchGroup in branchGroup.SubBranchGroups)
+        {
+            if (BreadCrumbContainsCurrentBranchGroupId(subBranchGroup))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+@helper RenderBranchGroupLine(BranchGroupNavigationModel.BranchGroupModel branchGroup)
+{
+    <li class="@(branchGroup.Id == Model.CurrentBranchGroupId ? "active" : "inactive")">
+        @if (!branchGroup.SubBranchGroups.Any())
+        {
+            <a href="@Url.Action("Detail","BranchGroupRead", new { id = branchGroup.Id })">
+                @Html.Raw(branchGroup.Name)
+            </a>
+        }
+        else
+        {
+                <a>
+                    @Html.Raw(branchGroup.Name)
+                    
+                </a>
+                }
+    @{
+        if (branchGroup.Id == Model.CurrentBranchGroupId ||
+            branchGroup.SubBranchGroups.Count(BreadCrumbContainsCurrentBranchGroupId) > 0)
+        {
+            if (branchGroup.SubBranchGroups.Count > 0)
+            {
+                <ul class="sublist">
+                    @foreach (var subBranchGroup in branchGroup.SubBranchGroups)
+                    {
+                        @RenderBranchGroupLine(subBranchGroup)
+                    }
+                </ul>
+            }
+        }
+    }
+</li>
+}
+
+@if (Model.BranchGroups.Count > 0)
+{
+    <h4 class="titleIntroDiv">@T("BranchGroups")</h4>
+        <ul>
+            @foreach (var category in Model.BranchGroups)
+            {
+                @RenderBranchGroupLine(category)
+            }
+        </ul>
+}

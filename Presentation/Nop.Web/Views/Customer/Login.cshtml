@@ -1,0 +1,100 @@
+﻿@model LoginModel
+@using Nop.Web.Models.Customer;
+@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Login").Text);
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl("Register");
+    if (!String.IsNullOrEmpty(this.Context.Request.QueryString["returnUrl"]))
+    {
+        var webHelper = EngineContext.Current.Resolve<IWebHelper>();
+        registerUrl = webHelper.ModifyQueryString(registerUrl, "returnurl=" + HttpUtility.UrlEncode(this.Context.Request.QueryString["returnUrl"]), null);
+    }
+}
+<div class="youAreHere">
+    <ul>
+        <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+        <li class="active"><a href="#">@T("Account.Login.Welcome")</a></li>
+    </ul>
+</div>
+<div class="row content-sub-page">
+    <div class="col-7 formSignin">
+        <h3 class="form-signin-heading">@T("Account.Login.ReturningCustomer")</h3>
+        @Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })
+        <div style="width:450px; padding:20px 0; margin:0 100px;">
+            @using (Html.BeginForm())
+            {
+                if (Model.UsernamesEnabled)
+                {
+                    <div class="row">
+                        @Html.LabelFor(m => m.Username, new {}, ":")
+                        @Html.TextBoxFor(m => m.Username, new {@class = "form-control", autofocus = "autofocus"})
+                        @Html.ValidationMessageFor(m => m.Username)
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        @Html.LabelFor(m => m.Email, new { }, ":")
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", autofocus = "autofocus" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                }
+                <div class="row">
+                    @Html.LabelFor(m => m.Password, new { }, ":")
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+                <div class="row">
+                    <span style="float:right;">
+                        
+                        @Html.LabelFor(m => m.RememberMe)
+                        @Html.CheckBoxFor(m => m.RememberMe, new { style = "width:20px; float:left;margin:8px 0 0 0;" })
+                    </span>
+                </div>
+                <div class="row">
+                    <span style="float:right;">
+                        @Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
+                    </span>
+                </div>
+                if (Model.DisplayCaptcha)
+                {
+                    <div class="row">
+                        @Html.Raw(Html.GenerateCaptcha())
+                    </div>
+                }
+                <div class="row">
+                    <button class="btn btn-danger btn-block" type="submit">@T("Account.Login.LoginButton")</button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-3 formRegister">
+        @if (Model.CheckoutAsGuest)
+        {
+            <h3 class="form-signin-heading">@T("Account.Login.CheckoutAsGuestOrRegister")</h3>
+            @Html.Action("TopicBlock", "Topic", new {systemName = "CheckoutAsGuestOrRegister"})
+            <div class="buttons">
+                <button type="button" class="btn btn-default" onclick=" location.href = '@Url.RouteUrl("Checkout")' " >@T("Account.Login.CheckoutAsGuest")</button>
+                <button type="button" class="btn btn-default" onclick=" location.href = '@registerUrl' ">@T("Account.Register")</button>
+            </div>
+        }
+        else
+        {
+            <h3 class="form-signin-heading">@T("Account.Login.NewCustomer")</h3>
+            <p>
+                @T("Account.Login.NewCustomerText")
+            </p>
+            <div class="buttons">
+                <button type="button" class="btn btn-default" onclick="location.href='@registerUrl'">@T("Account.Register")</button>
+            </div>
+        }
+        
+    </div>
+</div>
+   

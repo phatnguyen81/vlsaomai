@@ -1,0 +1,8 @@
+﻿Group: Misc
+FriendlyName: NewsExs Management
+SystemName: Misc.NewsExs
+Version: 1.0
+SupportedVersions: 3.10
+Author: Nguyen Huu Phat
+DisplayOrder: 1
+FileName: Toi.Plugin.Misc.NewsExs.dll

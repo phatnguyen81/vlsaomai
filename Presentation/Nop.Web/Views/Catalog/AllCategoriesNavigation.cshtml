@@ -1,0 +1,128 @@
+﻿@model CategoryNavigationModel
+@using Nop.Web.Models.Catalog;
+
+@functions{
+    public bool BreadCrumbContainsCurrentCategoryId(CategoryNavigationModel.CategoryModel category)
+    {
+        if (Model.CurrentCategoryId == 0)
+            return false;
+
+        if (category.Id == Model.CurrentCategoryId)
+            return true;
+
+        foreach (var subCategory in category.SubCategories)
+        {
+            if (BreadCrumbContainsCurrentCategoryId(subCategory))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+@helper RenderCategoryLine(CategoryNavigationModel.CategoryModel category)
+{
+    <li>
+        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+            @Html.Raw(category.Name)
+        </a>
+        @{
+            if (category.SubCategories.Count > 0)
+            {
+
+                <ul class="subMenu">
+                    @foreach (var subCategory in category.SubCategories)
+                    {
+                        @RenderCategoryLine(subCategory)
+                    }
+                </ul>
+            }
+        }
+    </li>
+}
+@if (Model.Categories.Count > 0)
+{
+    <div id="leftmenu">
+        <h2>@T("Products") </h2>
+        <ul class="leftMenu">
+            @foreach (var category in Model.Categories)
+            {
+                @RenderCategoryLine(category)
+            }
+        </ul>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("ul.leftMenu>li").find('ul.subMenu').hide();
+        //$("ul.leftMenu li").hover(function () {
+        //    $(this).addClass("menuHover");
+        //});
+        //$("ul.leftMenu li").blur(function () {
+        //    $(this).removeClass("menuHover");
+        //});
+        //$("ul.leftMenu>li:first-child").addClass('active');
+        //$("ul.leftMenu>li:first-child").find('ul.subLeftMenu').show();
+        //$("ul.leftMenu>li>a").click(function () {
+        //    if (!$(this).parent().hasClass('active')) {
+        //        $("ul.leftMenu>li.active").find('ul.subLeftMenu').slideUp('normal');
+        //        $("ul.leftMenu>li.active").removeClass('active');
+        //        $(this).parent().addClass('active');
+        //        $(this).parent().find('ul.subLeftMenu').slideDown('normal');
+        //    }
+        //    return false;
+        //});
+
+    });
+</script>
+
+@*@helper RenderCategoryLine(CategoryNavigationModel.CategoryModel category, int level = 0)
+{
+    <li>
+        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+            @Html.Raw(category.Name)
+        </a>
+    @{
+        if (category.SubCategories.Count > 0)
+        {
+            
+             <ul class="@(level == 0 ? "subLeftMenu" : "subMenu")">
+                    @foreach (var subCategory in category.SubCategories)
+                    {
+                        @RenderCategoryLine(subCategory, level + 1)
+                    }
+             </ul>
+        }
+    }
+</li>
+}
+@if (Model.Categories.Count > 0)
+{
+    <div id="leftmenu">
+        <h2>@T("Products") </h2>
+        <ul class="leftMenu">
+            @foreach (var category in Model.Categories)
+            {
+                @RenderCategoryLine(category)
+            }
+        </ul>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("ul.leftMenu>li").find('ul.subLeftMenu').hide();
+        $("ul.leftMenu>li:first-child").addClass('active');
+        $("ul.leftMenu>li:first-child").find('ul.subLeftMenu').show();
+        $("ul.leftMenu>li>a").click(function () {
+            if (!$(this).parent().hasClass('active')) {
+                $("ul.leftMenu>li.active").find('ul.subLeftMenu').slideUp('normal');
+                $("ul.leftMenu>li.active").removeClass('active');
+                $(this).parent().addClass('active');
+                $(this).parent().find('ul.subLeftMenu').slideDown('normal');
+            }
+            return false;
+        });
+        
+    });
+</script>*@

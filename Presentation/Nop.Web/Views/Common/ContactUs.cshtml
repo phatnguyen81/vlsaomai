@@ -1,0 +1,74 @@
+﻿@model ContactUsModel
+@using Nop.Web.Models.Common;
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ContactUs").Text);
+}
+<div class="youAreHere">
+    <ul>
+        <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+        <li class="active"><a href="#">@T("PageTitle.ContactUs")</a></li>
+    </ul>
+</div>
+<div class="row content-sub-page contact-us" style="padding-bottom:75px;">
+    @Html.Widget("contactus_top")
+    <div class="col-6 formSignin">
+        <h2 class="form-signin-heading">@T("PageTitle.ContactUs")</h2>
+        <div style="width:500px;">
+            @Html.Widget("contactus_top")
+            @if (Model.SuccessfullySent)
+            {
+                <div class="result">
+                    @Model.Result
+                </div>
+            }
+            else
+            {
+                using (Html.BeginForm())
+                {
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                    </div>
+                    <div class="row">
+                        @Html.LabelFor(model => model.FullName)<label>:</label>
+                        @Html.TextBoxFor(model => model.FullName, new {@class = "form-control", placeholder = T("ContactUs.FullName.Hint")}) 
+                        <div class="clr"></div>
+                        @Html.ValidationMessageFor(model => model.FullName)
+                    </div>
+                    <div class="row">
+                        @Html.LabelFor(model => model.Email)<label>:</label>
+                        @Html.TextBoxFor(model => model.Email, new {@class = "form-control", placeholder = T("ContactUs.Email.Hint")}) 
+                        <div class="clr"></div>
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                    if (Model.DisplayCaptcha)
+                    {
+                        <div class="row">
+                            @Html.Raw(Html.GenerateCaptcha())
+                        </div>
+                    }
+                    <div class="row">
+                        @Html.LabelFor(model => model.Enquiry)<label>:</label>
+                        @Html.TextAreaFor(model => model.Enquiry, new {@class = "form-control", @rows = 7, placeholder = T("ContactUs.Enquiry.Hint")})
+                        <div class="clr"></div>
+                        @Html.ValidationMessageFor(model => model.Enquiry)
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-danger" type="reset" style="margin-left: 10px;">@T("ContactUs.Reset")</button>
+                        <button type="submit" name="send-email" class="btn btn-danger">@T("ContactUs.Button")</button>
+                    
+                    </div>
+                }
+
+            }
+        </div>
+       
+    </div>
+    <div class="col-4 formRegister infocontact" style="padding-top:55px;">
+        @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
+    </div>
+    @Html.Widget("contactus_bottom")
+</div>
+

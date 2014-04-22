@@ -1,0 +1,22 @@
+﻿@model BranchGroupModel
+@{
+    Layout = "~/Administration/Views/Shared/_AdminLayout.cshtml";
+    //page title
+    ViewBag.Title = @T("Toi.Plugin.Misc.Branches.BranchGroup.EditBranchGroupDetails").Text;
+}
+@using (Html.BeginForm("Edit","BranchGroup" , FormMethod.Post, new { id = "BranchGroup" }))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-content.png")" alt="" />
+            @T("Toi.Plugin.Misc.Branches.BranchGroup.EditBranchGroupDetails") - @Model.Name @Html.ActionLink("(" + T("Toi.Plugin.Misc.Branches.BranchGroup.BackToList") + ")", "List")</div>
+        <div class="options">
+            
+            <input type="submit" name="save" class="t-button" value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="t-button" value="@T("Admin.Common.SaveContinue")" />
+            <span id="BranchGroup-delete" class="t-button">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
+@Html.DeleteConfirmation("BranchGroup-delete")

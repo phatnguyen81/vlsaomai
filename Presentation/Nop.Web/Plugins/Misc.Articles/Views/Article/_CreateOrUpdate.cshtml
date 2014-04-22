@@ -1,0 +1,254 @@
+﻿@model ArticleModel
+@using Telerik.Web.Mvc.UI
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+
+@Html.Telerik().TabStrip().Name("article-edit").Items(x =>
+{
+    x.Add().Text(T("Toi.Plugin.Misc.Articles.Article.Info").Text).Content(TabInfo().ToHtmlString()).Selected(true);
+    x.Add().Text(T("Admin.Common.SEO").Text).Content(TabSeo().ToHtmlString());
+    x.Add().Text(T("Toi.Plugin.Misc.Articles.Article.Groups").Text).Content(TabGroups().ToHtmlString());
+    //generate an event
+    EngineContext.Current.Resolve<IEventPublisher>().Publish(new AdminTabStripCreated(x, "article-edit"));
+})
+@helper TabInfo()
+{
+    @(Html.LocalizedEditor<ArticleModel, ArticleLocalizedModel>("article-info-localized",
+    @<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Locales[item].Title)
+            @Html.ValidationMessageFor(model => model.Locales[item].Title)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Short):
+        </td>
+        <td class="adminData">
+            @Html.TextAreaFor(model => model.Locales[item].Short, new { style = "Width: 500px; Height: 150px;" })
+            @Html.ValidationMessageFor(model => model.Locales[item].Short)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Full):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Locales[item].Full, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Locales[item].Full)
+        </td>
+    </tr>
+</table>
+    ,
+                @<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Short):
+        </td>
+        <td class="adminData">
+            @Html.TextAreaFor(model => model.Short, new { style = "Width: 500px; Height: 150px;" })
+            @Html.ValidationMessageFor(model => model.Short)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Full):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Full, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Full)
+        </td>
+    </tr>
+</table>
+                            ))
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StartDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.EndDate):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Published):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Published)
+                @Html.ValidationMessageFor(model => model.Published)
+            </td>
+        </tr>
+    </table>
+}
+
+@helper TabSeo()
+{
+     @(Html.LocalizedEditor<ArticleModel, ArticleLocalizedModel>("article-seo-localized",
+               @<table class="adminContent">
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaKeywords):
+                       </td>
+                       <td class="adminData">
+                           @Html.EditorFor(model => model.Locales[item].MetaKeywords)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaKeywords)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaDescription):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].MetaDescription)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaDescription)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaTitle):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].MetaTitle)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaTitle)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].SeName):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].SeName)
+                           @Html.ValidationMessageFor(model => model.Locales[item].SeName)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td colspan="2">
+                           @Html.HiddenFor(model => model.Locales[item].LanguageId)
+                       </td>
+                   </tr>
+               </table>
+               ,
+               @<table class="adminContent">
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaKeywords):
+                       </td>
+                       <td class="adminData">
+                           @Html.EditorFor(x => x.MetaKeywords)
+                           @Html.ValidationMessageFor(model => model.MetaKeywords)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaDescription):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.MetaDescription)
+                           @Html.ValidationMessageFor(model => model.MetaDescription)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaTitle):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.MetaTitle)
+                           @Html.ValidationMessageFor(model => model.MetaTitle)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.SeName):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.SeName)
+                           @Html.ValidationMessageFor(model => model.SeName)
+                       </td>
+                   </tr>
+               </table>)) 
+}
+
+
+@helper TabGroups()
+{
+    if (Model.Id > 0)
+    {
+        if (Model.NumberOfAvailableGroups > 0)
+        {
+            @(Html.Telerik().Grid<ArticleModel.ArticleGroupModel>()
+                    .Name("articlegroups-grid")
+                       .DataKeys(keys =>
+                       {
+                           keys.Add(x => x.Id);
+                       })
+                       .DataBinding(dataBinding =>
+                       {
+                           dataBinding.Ajax()
+                               .Select("ArticleGroupList", "Article", new { articleId = Model.Id })
+                               .Insert("ArticleGroupInsert", "Article", new { articleId = Model.Id })
+                               .Update("ArticleGroupUpdate", "Article")
+                               .Delete("ArticleGroupDelete", "Article");
+                       })
+                       .Columns(columns =>
+                       {
+                           columns.Bound(x => x.ArticleGroup)
+                               .Width(500)
+                               .Centered();
+                           columns.Bound(x => x.IsHotArticle);
+                               
+                           columns.Bound(x => x.DisplayOrder)
+                               .Width(100);
+                           columns.Command(commands =>
+                           {
+                               commands.Edit().Text(T("Admin.Common.Edit").Text);
+                               commands.Delete().Text(T("Admin.Common.Delete").Text);
+                           })
+                           .Width(180);
+                       })
+                                                       .ToolBar(commands => commands.Insert())
+                                                       .ClientEvents(events => events.OnEdit("onArticleGroupEdit"))
+                                                       .EnableCustomBinding(true))
+
+            <script type="text/javascript">
+                function onArticleGroupEdit(e) {
+                    $(e.form).find('#ArticleGroup').data('tDropDownList').select(function (dataItem) {
+                        return dataItem.Value == e.dataItem['ArticleGroupId'];
+                    });
+                }
+            </script>
+        }
+        else
+        {
+            @T("Toi.Plugin.Misc.Articles.Articles.NoGroupsAvailable")
+        }
+    }
+    else
+    {
+        @T("Toi.Plugin.Misc.Articles.Article.SaveBeforeEdit")
+    }
+
+}

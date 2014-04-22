@@ -1,0 +1,63 @@
+﻿@model DiyGroupNavigationModel
+
+@functions{
+    public bool BreadCrumbContainsCurrentDiyGroupId(DiyGroupNavigationModel.DiyGroupModel diyGroup)
+    {
+        if (Model.CurrentDiyGroupId == 0)
+            return false;
+
+        if (diyGroup.Id == Model.CurrentDiyGroupId)
+            return true;
+
+        foreach (var subDiyGroup in diyGroup.SubDiyGroups)
+        {
+            if (BreadCrumbContainsCurrentDiyGroupId(subDiyGroup))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+@helper RenderDiyGroupLine(DiyGroupNavigationModel.DiyGroupModel diyGroup, int level)
+{
+    <li class="@(diyGroup.Id == Model.CurrentDiyGroupId ? "active" : "inactive") @(level==0?"dir":"")">
+        @if (!diyGroup.SubDiyGroups.Any())
+        {
+            <a href="@Url.Action("Detail","DiyGroupRead", new { id = diyGroup.Id })">
+                @Html.Raw(diyGroup.Name)
+            </a>
+        }
+        else
+        {
+                <a>
+                    @Html.Raw(diyGroup.Name)
+                    
+                </a>
+                }
+    @{
+
+            if (diyGroup.SubDiyGroups.Count > 0)
+            {
+                <ul class="sublist">
+                    @foreach (var subDiyGroup in diyGroup.SubDiyGroups)
+                    {
+                        @RenderDiyGroupLine(subDiyGroup, level + 1)
+                    }
+                </ul>
+            }
+    }
+</li>
+}
+
+@if (Model.DiyGroups.Count > 0)
+{
+    <h4 class="title">@T("DiyGroups")</h4>
+        <ul>
+            @foreach (var category in Model.DiyGroups)
+            {
+                @RenderDiyGroupLine(category,0)
+            }
+        </ul>
+}

@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    //current branchGroup ID
+    int currentDiyGroupId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("DiyGroupRead", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("Detail", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentDiyGroupId = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"].ToString());
+    }
+
+    //current branch ID
+    int currentDiyProjectId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("DiyProjectRead", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("Detail", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentDiyProjectId = Convert.ToInt32(Url.RequestContext.RouteData.Values["id"].ToString());
+    }
+}
+@section left{
+    @Html.Action("DiyGroupNavigation","DiyGroupRead", new {currentDiyGroupId = currentDiyGroupId, currentDiyProjectId = currentDiyProjectId})
+}
+@section YouAreHere{
+    <div class="youAreHere">
+        <ul>
+            <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+            <li class="active"><a href="#">@T("DoItYourself")</a></li>
+        </ul>
+    </div>
+}
+
+<div class="bannerPageProduct"><img src="@Url.Content("~/Content/images/DIY_banner.jpg")"></div>
+@Html.Action("HostestProject","DiyProjectRead")
+@Html.Action("HomePageProjects", "DiyProjectRead")

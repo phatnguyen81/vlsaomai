@@ -1,0 +1,88 @@
+﻿@model FooterModel
+@using Nop.Web.Models.Common;
+<div id="bottom">
+    <div class="receiveEmailWrapper">
+        @Html.Action("NewsletterBox", "Newsletter")
+    </div>
+    <div class="followWrapper">
+        
+        <div class="follow">
+            <div class="left">
+                <a href="http://www.facebook.com/vatlieusaomai" class="facebook" title="Facebook"></a>
+                <a href="#" class="twitter" title="Twitter"></a>
+                <a href="#" class="google" title="Google+"></a>
+            </div>
+            <div class="right">
+                <div class="fb-like" data-href="https://www.facebook.com/vatlieusaomai" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footerWrapper">
+        <div class="footer">
+            <div class="footer-col">
+                <ul>
+                    <li class="active"><a href="@Url.RouteUrl("Topic", new { SystemName = "aboutus" })">@T("AboutUs")</a></li>
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "ourmission" })">@T("OurMission")</a></li>
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "OurValue" })">@T("OurValue")</a></li>
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "OurProductAndService" })">@T("OurProductAndService")</a></li>
+                    @if (Model.SitemapEnabled)
+                    {
+                        @*<li><a href="@Url.Action("Sitemap", "Common")">@T("Sitemap")</a></li>*@
+                        <li><a href="@Url.Action("UnderConstruction", "Common")">@T("Sitemap")</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li class="active"><a href="@Url.Action("UnderConstruction", "Common")">@T("Help")</a></li>
+                    <li><a href="@Url.Action("UnderConstruction", "Common")">@T("Account.CustomerOrders")</a></li>
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "shippinginfo" })">@T("ShippingReturns")</a></li>
+                    @*<li><a href="@Url.RouteUrl("Topic", new { SystemName = "customerservice" })">@T("CustomerService")</a></li>*@
+                    <li><a href="@Url.Action("UnderConstruction", "Common")">@T("CustomerService")</a></li>
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "privacyinfo" })">@T("PrivacyNotice")</a></li>
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "faq" })">@T("FAQ")</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <ul>
+                    <li class="active"><a href="#">Thông Tin</a></li>
+                    <li><a href="@Url.Action("Index", "NewsExRead")">@T("News")</a></li>
+                    <li><a href="@Url.Action("Index", "EventRead")">@T("Event")</a></li>
+                    @*<li><a href="@Url.RouteUrl("Topic", new { SystemName = "Project" })">@T("Project")</a></li>*@
+                    <li><a href="@Url.Action("Index", "ProjectRead")">@T("Project")</a></li>
+                    @*<li><a href="@Url.Action("Index", "ServiceRead")">@T("Services")</a></li>*@
+                    
+                    @*<li><a href="@Url.RouteUrl("BranchGroup",new {action ="Detail",id = 0})">@T("BranchGroups")</a></li>*@
+                    @*<li><a href="@Url.Action("Detail","BranchGroupRead",new {id = 0})">@T("BranchGroups")</a></li>*@
+                    <li><a href="@Url.RouteUrl("Topic", new { SystemName = "agentlist" })">@T("BranchGroups")</a></li>
+                    <li><a href="@Url.Action("UnderConstruction", "Common")">Hệ thống kho</a></li>
+                    
+                </ul>
+            </div>
+            <div class="footer-col" style="width:40% !important;" />
+                        @Html.Action("TopicBlock", "Topic", new { systemName = "ContactInfoFooter" })
+               
+            </div>
+        </div>
+        <div class="footer">
+            @Html.Action("ManufacturerAll", "Catalog", new { currentManufacturerId  = 0})
+        </div>
+        <div class="footer copyright">
+            <span>@T("Content.CopyrightNotice", DateTime.Now.Year.ToString(), Model.StoreName)</span>
+        </div>
+    </div>
+
+@*<div class="footer">
+    <div class="footer-poweredby">
+        Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+
+    </div>
+    <div class="footer-disclaimer">
+        @T("Content.CopyrightNotice", DateTime.Now.Year.ToString(), Model.StoreName)
+    </div>
+    <div class="footer-store-theme">
+        @Html.Action("StoreThemeSelector", "Common")
+    </div>
+    @Html.Action("ChangeDeviceBlock", "Common")
+    @Html.Widget("footer")
+</div>*@

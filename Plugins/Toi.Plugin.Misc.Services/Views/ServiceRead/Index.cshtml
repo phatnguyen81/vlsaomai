@@ -1,0 +1,35 @@
+﻿@model ServiceIndexModel
+    @{
+        Layout = "~/Views/Shared/_ColumnsTwoIntro.cshtml";
+    }
+    @section left{
+        @Html.Action("InfoBlock", "Common")
+    }
+    @section YouAreHere{
+        <div class="youAreHere">
+            <ul>
+                <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+                <li class="active"><a href="#">@T("Toi.Plugin.Misc.Services.Service")</a></li>
+            </ul>
+        </div>
+    }
+    <h4 class="titleIntroDiv">@T("Toi.Plugin.Misc.Services.Service")</h4>
+    <div class="row rightContent">
+        @foreach (var service in Model.Services)
+        {
+            <div class="row col-xs-12 col_right serviceItems">
+                <h5>@Html.Raw(service.Title)</h5>
+                <div class="col-sm-7">
+                    @Html.Raw(service.Full)
+                </div>
+                <div class="col-sm-5 imageService" style="float:right;">
+                    <div class="crop">
+                        <img src="@service.PictureModel.ImageUrl">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row breakPages">
+    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+</div>

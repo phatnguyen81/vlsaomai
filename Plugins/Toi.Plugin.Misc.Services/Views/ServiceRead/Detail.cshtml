@@ -1,0 +1,20 @@
+﻿@model ServiceModel
+    @{
+        Layout = "~/Views/Shared/_ColumnsTwoIntro.cshtml";
+    }
+    @section left{
+        @Html.Action("InfoBlock", "Common")
+    }
+    @section YouAreHere{
+        <div class="youAreHere">
+            <ul>
+                <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+                <li><a href="@Url.Action("Index", "ServiceRead")">@T("Toi.Plugin.Misc.Services.Service")</a></li>
+                <li class="active">@Html.Raw(Model.Title)</li>
+            </ul>
+        </div>
+    }
+<h4 class="titleIntroDiv">@Html.Raw(Model.Title)</h4>
+<div>
+    @Html.Raw(Model.Full)
+</div>

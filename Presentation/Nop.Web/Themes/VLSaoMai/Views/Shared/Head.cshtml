@@ -1,0 +1,34 @@
+﻿@using Nop.Core;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Framework.UI
+@{
+    //add browser specific CSS files
+    var browser = Request.Browser;
+    if (browser.Browser == "IE" && browser.MajorVersion == 6)
+    {
+        Html.AppendCssFileParts("~/Themes/DefaultClean/Content/ie6.css");
+    }
+    else if (browser.Browser == "IE" && browser.MajorVersion == 7)
+    {
+        Html.AppendCssFileParts("~/Themes/DefaultClean/Content/ie7.css");
+    }
+    
+    //add main CSS file
+    var supportRtl = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Rtl;
+    if (supportRtl)
+    {
+        Html.AppendCssFileParts("~/Themes/DefaultClean/Content/styles.rtl.css");
+    }
+    else
+    {
+        Html.AddScriptParts("~/Themes/VLSaoMai/Content/style/assets/js/holder.js");
+        Html.AddScriptParts("~/Themes/VLSaoMai/Content/style/dist/js/bootstrap.min.js");
+        
+        Html.AppendCssFileParts("~/Themes/VLSaoMai/Content/styles.css");
+        Html.AppendCssFileParts("~/Themes/VLSaoMai/Content/style/dist/css/bootstrap-theme.min.css");
+        Html.AppendCssFileParts("~/Themes/VLSaoMai/Content/style/dist/css/bootstrap.css");
+        Html.AppendCssFileParts("~/Themes/VLSaoMai/Content/carousel.css");
+        Html.AppendCssFileParts("~/Themes/VLSaoMai/Content/mainstyle.css");
+        
+    }
+}

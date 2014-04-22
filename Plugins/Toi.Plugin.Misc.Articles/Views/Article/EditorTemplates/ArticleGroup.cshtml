@@ -1,0 +1,32 @@
+﻿@using Telerik.Web.Mvc.UI;
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services.Catalog;
+@using Nop.Core.Infrastructure;
+
+@{
+    var _articleService = EngineContext.Current.Resolve<IArticleService>();
+    var allArticleGroup = _articleService.GetAllArticleGroups(showHidden: true);
+
+
+    var articlegroupList = new List<SelectListItem>();
+    foreach (var c in allArticleGroup)
+    {
+        var name = c.GetFormattedBreadCrumb(_articleService);
+        if (name != null)
+        {
+            //Telerik has an issue when quotes are used. That'why we manually remove all quotes
+            //Find more info here: http://www.nopcommerce.com/boards/t/11413/tabs-can-not-be-selected-in-admin-edit-products.aspx
+            //TODO remove this code once it's fixed by Telerik team
+            name = name.Replace("\"", "");
+        }
+        var item = new SelectListItem()
+        {
+            Text = name,
+            Value = c.Id.ToString()
+        };
+        articlegroupList.Add(item);
+    }
+
+}
+
+@Html.Telerik().DropDownList().Name("ArticleGroup").BindTo(articlegroupList)

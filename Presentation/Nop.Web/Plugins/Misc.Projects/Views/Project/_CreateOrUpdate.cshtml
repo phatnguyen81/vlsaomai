@@ -1,0 +1,84 @@
+﻿@model ProjectModel
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+
+@Html.Telerik().TabStrip().Name("project-edit").Items(x =>
+{
+    x.Add().Text(T("Toi.Plugin.Misc.Projects.Project.Info").Text).Content(TabInfo().ToHtmlString()).Selected(true);
+    EngineContext.Current.Resolve<IEventPublisher>().Publish(new AdminTabStripCreated(x, "project-edit"));
+})
+@helper TabInfo()
+{
+    @(Html.LocalizedEditor<ProjectModel, ProjectLocalizedModel>("project-info-localized",
+    @<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Locales[item].Title)
+            @Html.ValidationMessageFor(model => model.Locales[item].Title)
+        </td>
+    </tr>
+   
+         <tr>
+             <td class="adminTitle">
+                 @Html.NopLabelFor(model => model.Locales[item].Full):
+             </td>
+             <td class="adminData">
+                 @Html.EditorFor(x => x.Locales[item].Full, "RichEditor")
+                 @Html.ValidationMessageFor(model => model.Locales[item].Full)
+             </td>
+         </tr>
+         <tr>
+             <td colspan="2">
+                 @Html.HiddenFor(model => model.Locales[item].LanguageId)
+             </td>
+         </tr>
+</table>
+    ,
+                @<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Full):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Full, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Full)
+        </td>
+    </tr>
+</table>
+                            ))
+    <table class="adminContent">
+       
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PictureId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PictureId)
+                @Html.ValidationMessageFor(model => model.PictureId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.DisplayOrder):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.DisplayOrder)
+                @Html.ValidationMessageFor(model => model.DisplayOrder)
+            </td>
+        </tr>
+      
+    </table>
+}

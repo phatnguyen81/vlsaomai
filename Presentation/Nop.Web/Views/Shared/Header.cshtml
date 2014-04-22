@@ -1,0 +1,22 @@
+﻿<div id="header" class="row">
+    @Html.Widget("header")
+    <div class="logo">
+        <a href="@Url.RouteUrl("HomePage")" class="logo">&nbsp; </a>
+    </div>
+        @Html.Action("HeaderLinks", "Common")
+        
+    
+
+    @*<div class="header-selectors-wrapper">
+        <div class="tax-display-type-selector">
+            @Html.Action("TaxTypeSelector", "Common")
+        </div>
+        <div class="currency-selector">
+            @Html.Action("CurrencySelector", "Common")
+        </div>
+        <div class="language-selector">
+            @Html.Action("LanguageSelector", "Common")
+        </div>
+        @Html.Widget("header_selectors")
+    </div>*@
+</div>

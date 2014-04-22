@@ -1,0 +1,216 @@
+﻿@model BranchModel
+@using Telerik.Web.Mvc.UI
+@Html.ValidationSummary(true)
+@Html.HiddenFor(model => model.Id)
+
+@Html.Telerik().TabStrip().Name("article-edit").Items(x =>
+{
+    x.Add().Text(T("Toi.Plugin.Misc.Branches.Branch.Info").Text).Content(TabInfo().ToHtmlString()).Selected(true);
+    x.Add().Text(T("Admin.Common.SEO").Text).Content(TabSeo().ToHtmlString());
+    //generate an event
+    EngineContext.Current.Resolve<IEventPublisher>().Publish(new AdminTabStripCreated(x, "article-edit"));
+})
+@helper TabInfo()
+{
+    @(Html.LocalizedEditor<BranchModel, BranchLocalizedModel>("article-info-localized",
+    @<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Locales[item].Title)
+            @Html.ValidationMessageFor(model => model.Locales[item].Title)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Short):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Locales[item].Short, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Locales[item].Short)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Locales[item].Full):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Locales[item].Full, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Locales[item].Full)
+        </td>
+    </tr>
+</table>
+    ,
+                @<table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Title):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Short):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Short, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Short)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Full):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.Full, "RichEditor")
+            @Html.ValidationMessageFor(model => model.Full)
+        </td>
+    </tr>
+</table>
+                            ))
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.BranchGroupId):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().ComboBoxFor(x => x.BranchGroupId).BindTo(Model.BranchGroups).Encode(true)
+                      .DataBinding(x => x.Ajax().Enabled(true).Select("AllBranchGroups", "BranchGroup", new { selectedId = Model.BranchGroupId })))
+                @Html.ValidationMessageFor(model => model.BranchGroupId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PictureId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PictureId)
+                @Html.ValidationMessageFor(model => model.PictureId)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Latitude):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().NumericTextBoxFor(model => model.Latitude)
+                    .DecimalDigits(5)  
+                )
+                @Html.ValidationMessageFor(model => model.Latitude)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Longitude):
+            </td>
+            <td class="adminData">
+                @(Html.Telerik().NumericTextBoxFor(model => model.Longitude)
+                    .DecimalDigits(5)   )
+                @Html.ValidationMessageFor(model => model.Longitude)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.Published):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.Published)
+                @Html.ValidationMessageFor(model => model.Published)
+            </td>
+        </tr>
+    </table>
+}
+
+@helper TabSeo()
+{
+     @(Html.LocalizedEditor<BranchModel, BranchLocalizedModel>("article-seo-localized",
+               @<table class="adminContent">
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaKeywords):
+                       </td>
+                       <td class="adminData">
+                           @Html.EditorFor(model => model.Locales[item].MetaKeywords)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaKeywords)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaDescription):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].MetaDescription)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaDescription)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].MetaTitle):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].MetaTitle)
+                           @Html.ValidationMessageFor(model => model.Locales[item].MetaTitle)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.Locales[item].SeName):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(model => model.Locales[item].SeName)
+                           @Html.ValidationMessageFor(model => model.Locales[item].SeName)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td colspan="2">
+                           @Html.HiddenFor(model => model.Locales[item].LanguageId)
+                       </td>
+                   </tr>
+               </table>
+               ,
+               @<table class="adminContent">
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaKeywords):
+                       </td>
+                       <td class="adminData">
+                           @Html.EditorFor(x => x.MetaKeywords)
+                           @Html.ValidationMessageFor(model => model.MetaKeywords)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaDescription):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.MetaDescription)
+                           @Html.ValidationMessageFor(model => model.MetaDescription)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.MetaTitle):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.MetaTitle)
+                           @Html.ValidationMessageFor(model => model.MetaTitle)
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="adminTitle">
+                           @Html.NopLabelFor(model => model.SeName):
+                       </td>
+                       <td class="adminData">
+                           @Html.TextAreaFor(x => x.SeName)
+                           @Html.ValidationMessageFor(model => model.SeName)
+                       </td>
+                   </tr>
+               </table>)) 
+}
+

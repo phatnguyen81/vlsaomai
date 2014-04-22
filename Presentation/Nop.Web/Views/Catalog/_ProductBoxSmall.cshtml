@@ -1,0 +1,36 @@
+﻿@model ProductOverviewModel
+@using Nop.Core.Domain.Orders
+@using Nop.Web.Models.Catalog;
+@{
+    //prepare "Add to cart" AJAX link
+    string addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
+    }    
+}
+<div class=" col-sm-3 pItem" data-productid="@Model.Id">
+    <div class="crop">
+        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Html.Raw(Model.DefaultPictureModel.Title)">
+            <img alt="@Html.Raw(Model.DefaultPictureModel.AlternateText)" src="@Model.DefaultPictureModel.ImageUrl" title="@Html.Raw(Model.DefaultPictureModel.Title)" />
+        </a>
+    </div>
+        <a class="title" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Html.Raw(Model.DefaultPictureModel.Title)">@Html.Raw(Model.Name)</a>
+    <h4 class="price">@Model.ProductPrice.Price</h4>
+    <p class="detail">@Html.Raw(Model.ShortDescription)</p>
+    <p>
+        @if (!Model.ProductPrice.DisableBuyButton)
+        {
+            <a href="#" class="btn btn-xs btn-primary" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false; ">@(Model.ProductPrice.AvailableForPreOrder ? T("ShoppingCart.PreOrder") : T("ShoppingCart.AddToCart"))</a>
+        }
+
+        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" class="btn btn-xs btn-default" style="margin-left:5px;">@T("Product.Details")</a>
+    </p>
+    @Html.Widget("productbox_add_info")
+</div>

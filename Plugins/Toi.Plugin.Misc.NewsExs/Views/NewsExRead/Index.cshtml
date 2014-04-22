@@ -1,0 +1,42 @@
+﻿@model NewsExIndexModel
+    @{
+        Layout = "~/Views/Shared/_ColumnsTwoIntro.cshtml";
+    }
+    @section left{
+        @Html.Action("InfoBlock", "Common")
+    }
+    @section YouAreHere{
+        <div class="youAreHere">
+            <ul>
+                <li><a href="@Url.RouteUrl("Homepage")">@T("Homepage")</a></li>
+                <li class="active"><a href="#">@T("Toi.Plugin.Misc.NewsExs.NewsEx")</a></li>
+            </ul>
+        </div>
+    }
+<h4 class="titleIntroDiv">@T("Toi.Plugin.Misc.NewsExs.NewsEx")</h4>
+<div class="row breakPages">
+    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+</div>
+
+    <div class="row rightContent">
+        @foreach (var newsEx in Model.NewsExs)
+{
+    <div class="row col-xs-12 col_right newsItem">
+        <h5><a href="@Url.Action("Detail","NewsExRead", new {id = newsEx.Id})">@Html.Raw(newsEx.Title)</a> </h5>
+        <div class="col-sm-3 imageNewsEx">
+            <a href="@Url.Action("Detail","NewsExRead", new {id = newsEx.Id})">
+                <div class="crop">
+                    <img src="@newsEx.PictureModel.ImageUrl">
+                </div>
+            </a> 
+        </div>
+        <div class="col-sm-9">
+            @Html.Raw(newsEx.Short)
+            <button class="btn btn-xs btn-info" type="button" onclick="document.location='@Url.Action("Detail","NewsExRead", new {id = newsEx.Id})'">@T("Toi.Plugin.Misc.NewsExs.Detail")</button>
+        </div>
+    </div>
+}
+    </div>
+    <div class="row breakPages">
+    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+</div>
