@@ -5,7 +5,6 @@
 @Html.Telerik().TabStrip().Name("project-edit").Items(x =>
 {
     x.Add().Text(T("Toi.Plugin.Misc.Projects.Project.Info").Text).Content(TabInfo().ToHtmlString()).Selected(true);
-    EngineContext.Current.Resolve<IEventPublisher>().Publish(new AdminTabStripCreated(x, "project-edit"));
 })
 @helper TabInfo()
 {

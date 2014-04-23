@@ -54,7 +54,7 @@
                     })
                 .Pageable(settings => settings.PageSize(gridPageSize).Position(GridPagerPosition.Both))
                 .DataBinding(dataBinding => dataBinding.Ajax().Select("List", "Project"))
-                .ClientProjects(events => events.OnDataBinding("onDataBinding"))
+                .ClientEvents(events => events.OnDataBinding("onDataBinding"))
                 .EnableCustomBinding(true))
         </td>
     </tr>
